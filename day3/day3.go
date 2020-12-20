@@ -330,33 +330,54 @@ var input = []string {
 ".....#......#.........#..##.#..",
 }
 
-func StartDay3(){
-  down := 1
-  right := 3
+func StartDay3(right int, down int) (runTotal int){
   
   arrayWidth := len(input[0])
   hillHeight := len(input) -1
   
   treeCount := 0
-  
   distance := 0
+  
+  xPos := right
+  yPos := down
+  
   for distance < hillHeight {
-    fmt.Println(down)
-    currentchar := input[down][right]
+    
+    currentchar := input[yPos][xPos]
     
     if(string(currentchar) == "#"){
       treeCount++
     }
     
-    down++
-    right = right + 3
+    yPos = yPos + down
+    xPos = xPos + right
     
-    if(right > (arrayWidth - 1)){
-      right = right - arrayWidth
+    fmt.Println("we are at grid ", xPos, yPos)
+    
+    if(xPos > (arrayWidth - 1)){
+      xPos = xPos - arrayWidth
     }
     
-    distance++
+    distance = distance + down
+    
+    if(distance > hillHeight){
+      fmt.Println("done and distance is ", distance)
+      break
+    }
   }
   
-  fmt.Println("total trees found %v", treeCount)
+  fmt.Println("total trees found ", treeCount)
+  return treeCount
+}
+
+func StartDay3B(){
+  run1 := StartDay3(1,1)
+  run2 := StartDay3(3,1)
+  run3 := StartDay3(5,1)
+  run4 := StartDay3(7,1)
+  run5 := StartDay3(1,2)
+  
+  product := run1 * run2 * run3 * run4 * run5
+  
+  fmt.Println("total trees found ", product)
 }
